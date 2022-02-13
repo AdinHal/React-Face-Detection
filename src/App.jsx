@@ -11,7 +11,20 @@ function App() {
         const detections = await faceapi.detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions()
         ).withFaceLandmarks()
             .withFaceExpressions()
-        console.log(detections)
+
+        canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(imgRef.current);
+        faceapi.matchDimensions(canvasRef.current,{
+            width: 900,
+            height: 550
+        })
+
+        const resizedVersion = faceapi.resizeResults(detections,{
+            width: 900,
+            height: 550
+        })
+
+        faceapi.draw.drawDetections(canvasRef.current,resizedVersion)
+
     }
 
     useEffect(()=>{
