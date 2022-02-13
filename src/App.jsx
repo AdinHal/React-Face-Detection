@@ -8,6 +8,7 @@ function App() {
     const canvasRef = useRef()
 
     const handleImage = async()=>{
+        // Creates an array with available detections on our current image
         const detections = await faceapi.detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions()
         ).withFaceLandmarks()
             .withFaceExpressions()
@@ -18,18 +19,22 @@ function App() {
             height: 550
         })
 
+        // Resizing the results and adjusting them accoridng to our image size
         const resizedVersion = faceapi.resizeResults(detections,{
             width: 900,
             height: 550
         })
 
+        // All combined, comment out for single view
         faceapi.draw.drawDetections(canvasRef.current,resizedVersion)
         faceapi.draw.drawFaceExpressions(canvasRef.current,resizedVersion)
+        faceapi.draw.drawFaceLandmarks(canvasRef.current,resizedVersion)
 
     }
 
     useEffect(()=>{
         const loadModels = ()=>{
+            // The faceapi models we want to use, check face-api.js documentation for full models list
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
                 faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
