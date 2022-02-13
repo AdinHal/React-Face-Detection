@@ -24,6 +24,7 @@ function App() {
         })
 
         faceapi.draw.drawDetections(canvasRef.current,resizedVersion)
+        faceapi.draw.drawFaceExpressions(canvasRef.current,resizedVersion)
 
     }
 
